@@ -1,0 +1,24 @@
+{
+	"name": "smart-elevator",
+	"version": "0.1.0",
+	"description": "A proposal of algorithm of smart elevators in brute force and dynamic programming.",
+	"main": "src/index.js",
+	"scripts": {
+		"dev": "node src/index.js",
+		"build": "del /q dist && pkg src/index.js --out-path dist/"
+	},
+	"keywords": [
+		"node",
+		"inquirer"
+	],
+	"author": "Gustavo Bittencourt Satheler <gustavosatheler@gmail.com>",
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/gustavosatheler/smart-elevator"
+	},
+	"devDependencies": {
+		"inquirer": "^6.2.0",
+		"inquirer-chalk-pipe": "^1.3.0"
+	}
+}
