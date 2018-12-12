@@ -9,10 +9,9 @@ function fatorial(numero) {
 
 /**
  * Calculo de análise combinatória
- * S = a! / p! (a - p)!
- * int a = andares
- * int b = paradas
- * @returns {array} Solucao
+ * @param int [a] - Quantidade de andares
+ * @param int [p] - Quantidade de paradas
+ * @returns {int} fatorial(a) / fatorial(p) fatorial(a - p)
  */
 function calcularQntSolucoes(andares, totalParadas) {
 	let n = 0
@@ -23,19 +22,4 @@ function calcularQntSolucoes(andares, totalParadas) {
 	return n
 }
 
-function combinacao(andares, paradas, inicio, fim, indice, qntParadas, solucao) {
-	if (indice == qntParadas) {
-		let conjunto = []
-		for (let i = 0; i < qntParadas; i++) {
-			conjunto.push(paradas[i])
-		}
-		return solucao.push(conjunto)
-	}
-
-	for (let i = inicio; i <= fim && fim - i + 1 >= qntParadas - indice; i++) {
-		paradas[indice] = andares[i]
-		combinacao(andares, paradas, i + 1, fim, indice + 1, qntParadas, solucao)
-	}
-}
-
-module.exports = { fatorial, calcularQntSolucoes, combinacao }
+module.exports = { fatorial, calcularQntSolucoes }

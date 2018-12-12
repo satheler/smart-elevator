@@ -22,8 +22,8 @@ function init(inicio) {
 function menuPrincipal() {
 	inquirer.prompt(questoes).then(opcoes => {
 		let elevador = new Elevador(opcoes.qntAndares, opcoes.paradas, opcoes.qntParadas)
-
-		eval(`elevador.calcularCaminho${opcoes.resolucao}()`)
+		let res = eval(`elevador.calcularTrajetoria${opcoes.resolucao}()`)
+		console.log(res)
 		init()
 	})
 }

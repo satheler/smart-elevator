@@ -1,60 +1,49 @@
-var calculo = require('./calculo')
-
 class Elevador {
-	constructor(posFinal, paradas, qntParadas) {
+	/**
+	 * @param  {number} posFinal Quantidade de andares do prédio
+	 * @param  {string} andares Quais andares irá parar?
+	 * @param  {number} qntParadas Quantidade de paradas que o elevador irá fazer
+	 */
+	constructor(posFinal, andares, qntParadas) {
 		this.posInicial = 0
 		this.posFinal = posFinal
-		this.paradas = this.gerarAndares(paradas.split(',').sort())
+
+		this.andares = this.gerarAndares(andares.split(',').sort())
 		this.qntParadas = qntParadas
-		this.solucoes = []
 	}
 
-	// calcularCaminhoFB() {
-	// 	for (let i = this.posInicial; i <= this.posFinal; i++) {
-	// 		this.gerarSolucao(i)
-	// 	}
+	/**
+	 * Calcula trajetoria utilizando algoritmo de Força Bruta
+	 */
+	calcularTrajetoriaFB() {
+		let solucoes = []
+		for (let i = 1; i <= this.qntParadas; i++) {
+			this.combinacao(this.andares, [], 0, this.andares.length - 1, 0, i, solucoes)
+		}
 
-	// 	this.solucoes.sort((solucaoA, solucaoB) => solucaoA.custo - solucaoB.custo)
-
-	// 	console.log(`De ${this.solucoes.length} soluções encontradas, a(s) melhor(es) solução(ões) encontrada(s) para ${this.qntParadas} parada(s) e(são) o andar: `)
-	// 	console.log(JSON.stringify(this.solucoes, null, 2))
-
-	// 	for (let i = 0; i < this.qntParadas; i++) {
-	// 		console.log(JSON.stringify(this.solucoes[i].andar, null, 2))
-	// 	}
-	// }
-
-	calcularCaminhoFB() {
-		console.log('Prog. Bruta')
+		solucoes.sort((a, b) => b.custo - a.custo || a.andares.length - b.andares.length)
+		return solucoes
 	}
 
-	calcularCaminhoPD() {
+	combinacao(andares, paradas, inicio, fim, indice, qntParadas, solucao) {
+		if (indice == qntParadas) {
+			let conjunto = []
+			let custo = 0
+			for (let i = 0; i < qntParadas; i++) {
+				custo += paradas[i].qntPessoas
+				conjunto.push(paradas[i])
+			}
+			return solucao.push({ andares: conjunto, custo })
+		}
+
+		for (let i = inicio; i <= fim && fim - i + 1 >= qntParadas - indice; i++) {
+			paradas[indice] = andares[i]
+			this.combinacao(andares, paradas, i + 1, fim, indice + 1, qntParadas, solucao)
+		}
+	}
+
+	calcularTrajetoriaPD() {
 		console.log('Prog. Dinâmica')
-	}
-
-	gerarSolucao(andar) {
-		let subir = this.calcularCustoSubida(andar)
-		let descer = this.calcularCustoDescida(andar)
-
-		this.solucoes.push({ andar, subir, descer, custo: subir + descer })
-	}
-
-	calcularCustoSubida(andarAtual) {
-		let subida = 0
-		for (let i = andarAtual + 1; i <= this.posFinal; i++) {
-			subida += this.paradas[i].qntPessoas
-		}
-
-		return subida
-	}
-
-	calcularCustoDescida(andarAtual) {
-		let descida = 0
-		for (let i = andarAtual - 1; i >= this.posInicial; i--) {
-			descida += this.paradas[i].qntPessoas
-		}
-
-		return descida
 	}
 
 	gerarAndares(paradas) {
@@ -65,7 +54,7 @@ class Elevador {
 			andares.push({ andar: i, qntPessoas: 0 })
 		}
 
-		paradas.map(andar => {
+		paradas.forEach(andar => {
 			if (andar >= andares.length) {
 				if (!andaresRemovidos.includes(andar)) {
 					andaresRemovidos.push(andar)
@@ -84,7 +73,4 @@ class Elevador {
 	}
 }
 
-let elevador = new Elevador(5, '2,3,3,3,4,5,5', 1)
-elevador.calcularCaminhoFB()
-
-// module.exports = Elevador
+module.exports = Elevador

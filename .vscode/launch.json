@@ -14,13 +14,13 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Launch Debug Program",
-			"program": "${workspaceFolder}\\src\\Elevador.js"
+			"program": "${workspaceFolder}\\src\\elevador.js"
 		},
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Launch only math",
-			"program": "${workspaceFolder}\\src\\calculo.js"
+			"name": "Launch Test",
+			"program": "${workspaceFolder}\\src\\test.js"
 		}
 	]
 }
