@@ -12,7 +12,7 @@
 		"inquirer"
 	],
 	"author": "Gustavo Bittencourt Satheler <gustavosatheler@gmail.com>",
-	"license": "ISC",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/gustavosatheler/smart-elevator"
