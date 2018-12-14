@@ -3,21 +3,20 @@ module.exports = [
 		type: 'input',
 		name: 'qntAndares',
 		message: 'Informe a quantidade de andares do prédio:',
-		default: '5',
+		// default: '15',
 		validate: value => (value.match('^[1-9]+[0-9\\S]*$') ? true : 'Por favor, informe um valor numerico positivo.')
 	},
 	{
 		type: 'input',
 		name: 'paradas',
-		default: '2,3,3,3,5,4,5',
+		// default: '1,3,6,8,11,14,15,15',
 		message: 'Informe os andares a parar separando-os por vírgula (e.g. 13,14,14,15):',
-		validate: value =>
-			value.match(`^[1-9]+[0-9,\\S]*$`) ? true : 'Por favor, informe somente andares numericos positivos.'
+		validate: value => (value.match(`^[1-9]+[0-9,\\S]*$`) ? true : 'Por favor, informe somente andares numericos positivos.')
 	},
 	{
 		type: 'input',
 		name: 'qntParadas',
-		default: '2',
+		// default: '3',
 		message: 'Quantas paradas você deseja que o elevador faça:',
 		validate: value => (value.match('^[1-9]+[0-9\\S]*$') ? true : 'Por favor, informe um valor numerico.')
 	},

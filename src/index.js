@@ -21,12 +21,26 @@ function init(inicio) {
 
 function menuPrincipal() {
 	inquirer.prompt(questoes).then(opcoes => {
-		let elevador = new Elevador(opcoes.qntAndares, opcoes.paradas, opcoes.qntParadas)
-		let resultado = eval(`elevador.calcularTrajetoria${opcoes.resolucao}()`)
-		resultado.sort((a, b) => b.custo - a.custo || a.andares.length - b.andares.length)
+		console.log()
+		console.time('- Tempo de execução')
 
-		console.log(resultado)
-		console.log('')
+		let elevador = new Elevador(opcoes.qntAndares, opcoes.paradas.split(','))
+		let solucoes = []
+		for (let i = 1; i <= opcoes.qntParadas; i++) {
+			eval(`elevador.combinacao${opcoes.resolucao}(i, solucoes)`)
+		}
+		console.timeEnd('- Tempo de execução')
+
+		solucoes.sort((a, b) => b.custo - a.custo || a.andares.length - b.andares.length)
+		console.log(chalkPipe('lightblue')(`- Foram encontradas ${solucoes.length} possíveis soluções;`))
+		console.log(chalkPipe('yellow')(`- A melhor combinação de paradas do elevador são nos andares ${solucoes[0].andares};`))
+		console.log(
+			chalkPipe('yellow')(
+				`- Quantidade de pessoas que irão subir ou descer as escadas: ${elevador.qntPessoas - solucoes[0].custo} de ${elevador.qntPessoas}`
+			)
+		)
+
+		console.log()
 		init()
 	})
 }
