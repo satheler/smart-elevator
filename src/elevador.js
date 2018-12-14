@@ -16,34 +16,45 @@ class Elevador {
 	 * Calcula trajetoria utilizando algoritmo de Força Bruta
 	 */
 	calcularTrajetoriaFB() {
+		console.time('Tempo de execução Algoritmo de força bruta')
 		let solucoes = []
 		for (let i = 1; i <= this.qntParadas; i++) {
 			this.combinacao(this.andares, [], 0, this.andares.length - 1, 0, i, solucoes)
 		}
 
 		solucoes.sort((a, b) => b.custo - a.custo || a.andares.length - b.andares.length)
+		console.timeEnd('Tempo de execução Algoritmo de força bruta')
 		return solucoes
 	}
 
-	combinacao(andares, paradas, inicio, fim, indice, qntParadas, solucao) {
-		if (indice == qntParadas) {
+	combinacao(andares, paradas, inicio, fim, indice, qntParada, solucao) {
+		if (indice == qntParada) {
 			let conjunto = []
 			let custo = 0
-			for (let i = 0; i < qntParadas; i++) {
+			for (let i = 0; i < qntParada; i++) {
 				custo += paradas[i].qntPessoas
-				conjunto.push(paradas[i])
+				conjunto.push(paradas[i].andar)
 			}
-			return solucao.push({ andares: conjunto, custo })
+			return solucao.push({ andares: JSON.stringify(conjunto), custo })
 		}
 
-		for (let i = inicio; i <= fim && fim - i + 1 >= qntParadas - indice; i++) {
+		for (let i = inicio; i <= fim && fim - i + 1 >= qntParada - indice; i++) {
 			paradas[indice] = andares[i]
-			this.combinacao(andares, paradas, i + 1, fim, indice + 1, qntParadas, solucao)
+			this.combinacao(andares, paradas, i + 1, fim, indice + 1, qntParada, solucao)
 		}
 	}
 
 	calcularTrajetoriaPD() {
-		console.log('Prog. Dinâmica')
+		console.time('Tempo de execução Algoritmo de Programação Dinâmica')
+		let andares = this.andares.filter(value => value.qntPessoas > 0)
+		let solucoes = []
+		for (let i = 1; i <= this.qntParadas; i++) {
+			this.combinacao(andares, [], 0, andares.length - 1, 0, i, solucoes)
+		}
+
+		solucoes.sort((a, b) => b.custo - a.custo || a.andares.length - b.andares.length)
+		console.timeEnd('Tempo de execução Algoritmo de Programação Dinâmica')
+		return solucoes
 	}
 
 	gerarAndares(paradas) {
@@ -66,11 +77,20 @@ class Elevador {
 		})
 
 		if (andaresRemovidos.length > 0) {
-			console.log(`Um ou mais andares foram removidos (${andaresRemovidos}), pois excedem o limite previamente informado.`)
+			console.log(
+				`Um ou mais andares foram removidos (${andaresRemovidos}), pois excedem o limite previamente informado.`
+			)
 		}
 
 		return andares
 	}
+}
+
+// Teste
+if (process.argv[2].toLowerCase() == 'debug') {
+	let el = new Elevador(5, '2,3,3,3,5,4,5', 2)
+	// console.log(el.calcularTrajetoriaFB())
+	console.log(el.calcularTrajetoriaPD())
 }
 
 module.exports = Elevador
