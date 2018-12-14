@@ -11,8 +11,7 @@ I work in a very tall building with a very slow elevator. It's frustrating when 
 
 In your terminal:
 
-### How to run
-
+### How to configure
 ```sh
 # Clone the repository
 $ git clone https://github.com/gustavosatheler/smart-elevator.git
@@ -20,12 +19,16 @@ $ git clone https://github.com/gustavosatheler/smart-elevator.git
 $ cd smart-elevator
 # Install dependencies
 $ npm install
+```
+
+### How to run
+```sh
 # Run the app
 $ npm run dev
 ```
 
 ### How to build
-
+**Note**: Running this requires .
 ```sh
 # Build app
 $ npm run build
