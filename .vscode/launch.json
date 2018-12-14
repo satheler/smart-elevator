@@ -14,7 +14,8 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Launch Debug Program",
-			"program": "${workspaceFolder}\\src\\elevador.js"
+			"program": "${workspaceFolder}\\src\\elevador.js",
+			"args": ["debug"]
 		},
 		{
 			"type": "node",

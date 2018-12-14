@@ -16,14 +16,13 @@ class Elevador {
 	 * Calcula trajetoria utilizando algoritmo de Força Bruta
 	 */
 	calcularTrajetoriaFB() {
-		console.time('Tempo de execução Algoritmo de força bruta')
+		console.time('Tempo de execução Algoritmo de Força Bruta')
 		let solucoes = []
 		for (let i = 1; i <= this.qntParadas; i++) {
 			this.combinacao(this.andares, [], 0, this.andares.length - 1, 0, i, solucoes)
 		}
 
-		solucoes.sort((a, b) => b.custo - a.custo || a.andares.length - b.andares.length)
-		console.timeEnd('Tempo de execução Algoritmo de força bruta')
+		console.timeEnd('Tempo de execução Algoritmo de Força Bruta')
 		return solucoes
 	}
 
@@ -46,15 +45,32 @@ class Elevador {
 
 	calcularTrajetoriaPD() {
 		console.time('Tempo de execução Algoritmo de Programação Dinâmica')
-		let andares = this.andares.filter(value => value.qntPessoas > 0)
 		let solucoes = []
 		for (let i = 1; i <= this.qntParadas; i++) {
-			this.combinacao(andares, [], 0, andares.length - 1, 0, i, solucoes)
+			this.combinacaoComMemo(this.andares, [], 0, this.andares.length - 1, 0, i, solucoes)
 		}
 
-		solucoes.sort((a, b) => b.custo - a.custo || a.andares.length - b.andares.length)
 		console.timeEnd('Tempo de execução Algoritmo de Programação Dinâmica')
 		return solucoes
+	}
+
+	combinacaoComMemo(andares, paradas, inicio, fim, indice, qntParada, solucoes) {
+		if (indice == qntParada) {
+			let conjunto = []
+			let custo = 0
+			for (let i = 0; i < qntParada; i++) {
+				custo += paradas[i].qntPessoas
+				conjunto.push(paradas[i].andar)
+			}
+			return solucoes.push({ andares: JSON.stringify(conjunto), custo })
+		}
+
+		for (let i = inicio; (i <= fim) & (fim - i + 1 >= qntParada - indice); i++) {
+			paradas[indice] = andares[i]
+			if (paradas[indice].qntPessoas != 0) {
+				this.combinacaoComMemo(andares, paradas, i + 1, fim, indice + 1, qntParada, solucoes)
+			}
+		}
 	}
 
 	gerarAndares(paradas) {
@@ -87,9 +103,10 @@ class Elevador {
 }
 
 // Teste
-if (process.argv[2].toLowerCase() == 'debug') {
+if (process.argv[2] && process.argv[2].toLowerCase() == 'debug') {
 	let el = new Elevador(5, '2,3,3,3,5,4,5', 2)
-	// console.log(el.calcularTrajetoriaFB())
+	console.log(el.calcularTrajetoriaFB())
+	console.log('')
 	console.log(el.calcularTrajetoriaPD())
 }
 
