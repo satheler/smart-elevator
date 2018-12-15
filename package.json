@@ -4,7 +4,8 @@
 	"description": "A proposal of algorithm of smart elevators in brute force and dynamic programming.",
 	"main": "src/index.js",
 	"scripts": {
-		"dev": "node src/index.js",
+		"app": "node .",
+		"debug": "node . debug",
 		"build": "del /q dist && pkg src/index.js --out-path dist/"
 	},
 	"keywords": [

@@ -12,9 +12,10 @@ I work in a very tall building with a very slow elevator. It's frustrating when 
 In your terminal:
 
 ### How to configure
+
 ```sh
 # Clone the repository
-$ git clone https://github.com/gustavosatheler/smart-elevator.git
+$ git clone https://github.com/gustavosatheler/smart-elevator.gits
 # Go into the repository
 $ cd smart-elevator
 # Install dependencies
@@ -22,13 +23,23 @@ $ npm install
 ```
 
 ### How to run
+
 ```sh
 # Run the app
-$ npm run dev
+$ npm run app
+```
+
+### How to run the app showing all combinations
+
+```sh
+# Run the debug
+$ npm run debug
 ```
 
 ### How to build
+
 **Note**: Running this requires .
+
 ```sh
 # Build app
 $ npm run build

@@ -19,6 +19,15 @@ function init(inicio) {
 	menuPrincipal()
 }
 
+function debug(solucoes) {
+	if (process.argv[2] && process.argv[2].toLowerCase() == 'debug') {
+		console.log()
+		console.log(chalkPipe('purple')('== Conjunto de soluções =='))
+		console.log(solucoes)
+		console.log()
+	}
+}
+
 function menuPrincipal() {
 	inquirer.prompt(questoes).then(opcoes => {
 		console.log()
@@ -33,6 +42,7 @@ function menuPrincipal() {
 
 		solucoes.sort((a, b) => b.custo - a.custo || a.andares.length - b.andares.length)
 		console.log(chalkPipe('lightblue')(`- Foram encontradas ${solucoes.length} possíveis soluções;`))
+		debug(solucoes)
 		console.log(chalkPipe('yellow')(`- A melhor combinação de paradas do elevador são nos andares ${solucoes[0].andares};`))
 		console.log(
 			chalkPipe('yellow')(
