@@ -1,6 +1,3 @@
 node_modules/
 *.log
-_old
-src/test.js
-src/utils.js
 dist/

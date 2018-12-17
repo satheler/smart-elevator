@@ -19,15 +19,6 @@ function init(inicio) {
 	menuPrincipal()
 }
 
-function debug(solucoes) {
-	if (process.argv[2] && process.argv[2].toLowerCase() == 'debug') {
-		console.log()
-		console.log(chalkPipe('purple')('== Conjunto de soluções =='))
-		console.log(solucoes)
-		console.log()
-	}
-}
-
 function menuPrincipal() {
 	inquirer.prompt(questoes).then(opcoes => {
 		console.log()
@@ -46,13 +37,22 @@ function menuPrincipal() {
 		console.log(chalkPipe('yellow')(`- A melhor combinação de paradas do elevador são nos andares ${solucoes[0].andares};`))
 		console.log(
 			chalkPipe('yellow')(
-				`- Quantidade de pessoas que irão subir ou descer as escadas: ${elevador.qntPessoas - solucoes[0].custo} de ${elevador.qntPessoas}`
+				`- Quantidade de pessoas que irão subir ou descer as escadas: ${elevador.qntTotalPessoas - solucoes[0].custo} de ${elevador.qntTotalPessoas}`
 			)
 		)
 
 		console.log()
 		init()
 	})
+}
+
+function debug(solucoes) {
+	if (process.argv[2] && process.argv[2].toLowerCase() == 'debug') {
+		console.log()
+		console.log(chalkPipe('purple')('== Conjunto de soluções =='))
+		console.log(solucoes)
+		console.log()
+	}
 }
 
 init(true)
